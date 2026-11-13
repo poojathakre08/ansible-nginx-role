@@ -1,0 +1,27 @@
+    - name: installation of nginx
+      ansible.builtin.yum:
+        name: "{{pkg}}"
+        state: present
+      
+    - name: start and enable svc
+      ansible.builtin.systemd_service:
+        name: "{{svc}}"
+        state: started
+        enabled: true
+
+    - name: config the server
+      ansible.builtin.blockinfile: 
+         path: "{{config_path}}"
+         create: yes  
+         block: | 
+          server { 
+               listen 81;
+               root /usr/share/nginx/html;
+               index index.html;
+               }
+      notify: restart nginx 
+    
+    - name: deployment 
+      ansible.builtin.copy:
+        src: index.html
+        dest: "{{file_path}}"

@@ -1,0 +1,6 @@
+---
+# vars file for nginx
+pkg: nginx
+svc: nginx
+file_path: /usr/share/nginx/html/index.html
+config_path: /etc/nginx/conf.d/custom.conf
